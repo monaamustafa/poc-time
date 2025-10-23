@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>Bootstrap 3 Time Picker Example</title>
+
+  <!-- Bootstrap 3 CSS -->
+  <link
+    rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+  />
+
+  <!-- Bootstrap Datetimepicker CSS -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
+  />
+  
+  <!-- Custom styling for Arabic time picker -->
+  <style>
+    .bootstrap-datetimepicker-widget {
+      z-index: 9999 !important;
+    }
+    
+    /* Change all icons color to golden */
+    .bootstrap-datetimepicker-widget .glyphicon {
+      color: #cdb163 !important;
+    }
+    
+    /* Specifically target all arrow icons */
+    .bootstrap-datetimepicker-widget .glyphicon-chevron-up,
+    .bootstrap-datetimepicker-widget .glyphicon-chevron-down,
+    .bootstrap-datetimepicker-widget .glyphicon-chevron-left,
+    .bootstrap-datetimepicker-widget .glyphicon-chevron-right {
+      color: #cdb163 !important;
+    }
+    
+    /* Target time picker specific icons */
+    .bootstrap-datetimepicker-widget .glyphicon-time {
+      color: #cdb163 !important;
+    }
+    
+    /* Target any other icons that might appear */
+    .bootstrap-datetimepicker-widget [class*="glyphicon-"] {
+      color: #cdb163 !important;
+    }
+    
+    /* Style the AM/PM toggle period button background */
+    .bootstrap-datetimepicker-widget .timepicker-picker .timepicker-picker table .separator,
+    .bootstrap-datetimepicker-widget .timepicker-picker .btn[data-action="togglePeriod"] {
+      background-color: #cdb163 !important;
+      color: white !important;
+      border: 1px solid #b8a055 !important;
+      width: 60px !important;
+      min-width: 60px !important;
+      text-align: center !important;
+    }
+    
+    /* Alternative selector for the toggle period button */
+    .bootstrap-datetimepicker-widget .btn-primary {
+      background-color: #cdb163 !important;
+      border-color: #b8a055 !important;
+      color: white !important;
+      width: 60px !important;
+      min-width: 60px !important;
+      text-align: center !important;
+    }
+    
+    /* Target the period toggle specifically */
+    .bootstrap-datetimepicker-widget table .toggleperiod {
+      background-color: #cdb163 !important;
+      color: white !important;
+      width: 60px !important;
+      min-width: 60px !important;
+      text-align: center !important;
+    }
+    
+    /* RTL Layout Styling */
+    body {
+      direction: rtl !important;
+      text-align: right !important;
+    }
+    
+    .container {
+      position: relative;
+      direction: rtl !important;
+      text-align: right !important;
+    }
+    
+    .form-group {
+      direction: rtl !important;
+      text-align: right !important;
+    }
+    
+    .form-group label {
+      text-align: right !important;
+      float: right !important;
+    }
+    
+    /* RTL styling for input groups */
+    .input-group {
+      direction: rtl !important;
+    }
+    
+    .input-group .form-control {
+      text-align: right !important;
+      direction: rtl !important;
+    }
+    
+    .input-group-addon {
+      float: left !important;
+    }
+    
+    /* RTL styling for the time picker widget */
+    .bootstrap-datetimepicker-widget {
+      direction: rtl !important;
+      text-align: right !important;
+    }
+    
+    .bootstrap-datetimepicker-widget .timepicker-picker {
+      direction: rtl !important;
+    }
+    
+    .bootstrap-datetimepicker-widget table {
+      text-align: center !important;
+    }
+    .list-unstyled{
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+  </style>
+</head>
+<body>
+<div class="container" style="margin-top: 50px;">
+  <h2>منتقي الوقت العربي - Arabic Time Picker</h2>
+  
+  
+  <!-- Arabic time picker -->
+  <div class="form-group">
+    <label for="timepicker2">منتقي الوقت العربي (ص/م):</label>
+    <div class="input-group date" id="timepicker2">
+      <input type="text" class="form-control" placeholder="اختر الوقت" />
+     
+    </div>
+  </div>
+
+</div>
+  <!-- jQuery (required for Bootstrap 3) -->
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+  <!-- Bootstrap 3 JS -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <!-- Moment.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+
+  <!-- Bootstrap Datetimepicker JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+  <!-- Initialize Arabic time picker -->
+  <script type="text/javascript">
+    $(function () {
+        console.log('Initializing Arabic time picker...');
+        
+        // Create custom Arabic locale with ص/م
+        moment.defineLocale('ar-custom', {
+            months: moment.localeData('ar')._config.months,
+            monthsShort: moment.localeData('ar')._config.monthsShort,
+            weekdays: moment.localeData('ar')._config.weekdays,
+            weekdaysShort: moment.localeData('ar')._config.weekdaysShort,
+            weekdaysMin: moment.localeData('ar')._config.weekdaysMin,
+            longDateFormat: moment.localeData('ar')._config.longDateFormat,
+            calendar: moment.localeData('ar')._config.calendar,
+            relativeTime: moment.localeData('ar')._config.relativeTime,
+            meridiem: function (hour, minute, isLowercase) {
+                if (hour < 12) {
+                    return 'ص'; // صباحاً (morning)
+                } else {
+                    return 'م'; // مساءً (evening) 
+                }
+            },
+            meridiemParse: /ص|م/,
+            isPM: function (input) {
+                return input === 'م';
+            }
+        });
+        
+        $('#timepicker2').datetimepicker({
+            format: 'hh:mm A',      // 12-hour format with AM/PM
+            locale: 'ar-custom',    // Use Arabic locale with ص/م
+            defaultDate: false,     // No default date
+            useCurrent: false,      // Don't use current time
+            debug: false,           // Set to true for debugging
+            allowInputToggle: true, // Allow clicking on input to open picker
+            showClear: true,        // Show clear button
+            showClose: true         // Show close button
+        });
+        
+        console.log('Arabic time picker initialized');
+        
+        // Additional click handler for input field
+        $('#timepicker2 input').on('click', function() {
+            console.log('Input clicked - opening picker');
+            $('#timepicker2').data("DateTimePicker").show();
+        });
+        
+        // Replace AM/PM in the picker modal
+        $('#timepicker2').on('dp.show', function() {
+            console.log('Time picker opened');
+            setTimeout(function() {
+                $('.bootstrap-datetimepicker-widget [data-action="togglePeriod"]').each(function() {
+                    var text = $(this).text().trim();
+                    if (text === 'AM') $(this).text('ص');
+                    if (text === 'PM') $(this).text('م');
+                });
+            }, 100);
+        });
+        
+        $('#timepicker2').on('dp.change', function(e) {
+            if (e.date) {
+                var timeStr = e.date.format('hh:mm A');
+                // Replace AM/PM with Arabic
+                timeStr = timeStr.replace(/AM/g, 'ص').replace(/PM/g, 'م');
+                $(this).find('input').val(timeStr);
+                console.log('Time selected:', timeStr);
+            }
+        });
+        
+        // Clear button functionality
+        $(document).on('click', '.bootstrap-datetimepicker-widget [data-action="clear"]', function() {
+            $('#timepicker2').data("DateTimePicker").clear();
+            $('#timepicker2 input').val('');
+        });
+    });
+ </script>
+</body>
+</html>
