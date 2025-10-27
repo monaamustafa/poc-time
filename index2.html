@@ -17,6 +17,9 @@
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.4/dist/css/tempus-dominus.min.css"
         crossorigin="anonymous">
+    <style>
+       
+    </style>
 </head>
 
 <body>
@@ -33,7 +36,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-12">
                 <label for="time1" class="form-label">Start Time</label>
                 <input id="time1" type="text" class="form-control time-picker" placeholder="Select start time..." />
             </div>
@@ -87,6 +90,40 @@
                     localization: {
                         format: 'LT', // Time only format
                         locale: 'ar'
+                    }
+                });
+                
+                // Convert translate3d to right and top positioning
+                input.addEventListener('show.td', function() {
+                    const observer = new MutationObserver(function(mutations) {
+                        mutations.forEach(function(mutation) {
+                            const widget = document.querySelector('.tempus-dominus-widget');
+                            if (widget && widget.style.transform) {
+                                // Extract the current transform values
+                                const transformMatch = widget.style.transform.match(/translate3d\(([^,]+),\s*([^,]+),\s*([^)]+)\)/);
+                                if (transformMatch) {
+                                    const xValue = parseFloat(transformMatch[1].trim());
+                                    const yValue = parseFloat(transformMatch[2].trim());
+                                    
+                                    // Convert to right and top positioning
+                                    widget.style.position = 'fixed';
+                                    widget.style.right = xValue + 'px';
+                                    widget.style.top = yValue + 'px';
+                                    widget.style.left = 'auto';
+                                    widget.style.transform = 'none';
+                                    widget.style.zIndex = '1050';
+                                }
+                            }
+                        });
+                    });
+                    
+                    // Start observing
+                    const widget = document.querySelector('.tempus-dominus-widget');
+                    if (widget) {
+                        observer.observe(widget, {
+                            attributes: true,
+                            attributeFilter: ['style']
+                        });
                     }
                 });
             });
