@@ -419,6 +419,36 @@
               });
             }
           });
+
+          // Custom hover text/tooltips for action buttons
+          input.addEventListener("show.td", function () {
+            const widget = document.querySelector(".tempus-dominus-widget");
+            if (widget) {
+              // Custom tooltip mappings
+              const tooltipMappings = {
+                incrementHours: "زيادة الساعة",
+                decrementHours: "تقليل الساعة",
+                incrementMinutes: "زيادة الدقائق",
+                decrementMinutes: "تقليل الدقائق",
+                togglePeriod: "تبديل ص/م",
+                toggleMeridiem: "تبديل ص/م",
+                showHours: "عرض الساعات",
+                showMinutes: "عرض الدقائق",
+                clear: "مسح الوقت",
+                close: "إغلاق المنتقي",
+              };
+
+              // Find and update tooltips for all action buttons
+              Object.keys(tooltipMappings).forEach((action) => {
+                const buttons = widget.querySelectorAll(
+                  `[data-action="${action}"]`
+                );
+                buttons.forEach((button) => {
+                  button.setAttribute("title", tooltipMappings[action]);
+                });
+              });
+            }
+          });
         });
       });
     </script>
